@@ -1,0 +1,42 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+	<div class="container">
+		{% if messages %}
+			{% for message in messages %}
+				{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+					<div class="alert alert-danger" role = "alert">
+						{{message}}
+					</div>
+				{% endif %}
+				{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+					<div class="alert alert-success" role = "alert">
+						{{message}}
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %} 
+	</div>
+	<div class="row">
+		{% for product in products %}
+			<div class="col-lg-4">
+				{% if product.image %}
+					<img class="thumbnail" src="{{product.image.url}}">
+				{% else %}
+					<img class="thumbnail" src="{% static 'images/placeholder.png' %}">
+				{% endif %}
+				
+				<div class="box-element product">
+					<h6><strong>{{product.name}}</strong></h6>
+					<hr>
+
+					<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+					<a class="btn btn-outline-success" href="#">View</a>
+					<h4 style="display: inline-block; float: right"><strong>${{product.price | floatformat:2 }}</strong></h4>
+
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+{% endblock content %}
